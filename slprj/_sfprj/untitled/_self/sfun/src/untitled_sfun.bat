@@ -1,2 +1,1 @@
-call "mexopts.bat"
-nmake -f untitled_sfun.mak
+"D:\kpi\II\soft\MatLabR2012b\sys\lcc\bin\lccmake" -f untitled_sfun.lmk

@@ -16,8 +16,8 @@
 /* Variable Declarations */
 
 /* Variable Definitions */
-static const char * c2_debug_family_names[5] = { "nargin", "nargout", "z", "A",
-  "B" };
+static const char * c2_debug_family_names[5] = { "nargin", "nargout", "dz", "dA",
+  "dB" };
 
 /* Function Declarations */
 static void initialize_c2_untitled(SFc2_untitledInstanceStruct *chartInstance);
@@ -38,12 +38,12 @@ static void init_script_number_translation(uint32_T c2_machineNumber, uint32_T
   c2_chartNumber);
 static const mxArray *c2_sf_marshallOut(void *chartInstanceVoid, void *c2_inData);
 static real_T c2_emlrt_marshallIn(SFc2_untitledInstanceStruct *chartInstance,
-  const mxArray *c2_B, const char_T *c2_identifier);
+  const mxArray *c2_dB, const char_T *c2_identifier);
 static real_T c2_b_emlrt_marshallIn(SFc2_untitledInstanceStruct *chartInstance,
   const mxArray *c2_u, const emlrtMsgIdentifier *c2_parentId);
 static void c2_sf_marshallIn(void *chartInstanceVoid, const mxArray
   *c2_mxArrayInData, const char_T *c2_varName, void *c2_outData);
-static void c2_info_helper(c2_ResolvedFunctionInfo c2_info[16]);
+static void c2_info_helper(c2_ResolvedFunctionInfo c2_info[14]);
 static void c2_eml_scalar_eg(SFc2_untitledInstanceStruct *chartInstance);
 static const mxArray *c2_b_sf_marshallOut(void *chartInstanceVoid, void
   *c2_inData);
@@ -99,20 +99,20 @@ static const mxArray *get_sim_state_c2_untitled(SFc2_untitledInstanceStruct
   uint8_T c2_c_hoistedGlobal;
   uint8_T c2_c_u;
   const mxArray *c2_d_y = NULL;
-  real_T *c2_A;
-  real_T *c2_B;
-  c2_B = (real_T *)ssGetOutputPortSignal(chartInstance->S, 2);
-  c2_A = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
+  real_T *c2_dA;
+  real_T *c2_dB;
+  c2_dB = (real_T *)ssGetOutputPortSignal(chartInstance->S, 2);
+  c2_dA = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
   c2_st = NULL;
   c2_st = NULL;
   c2_y = NULL;
   sf_mex_assign(&c2_y, sf_mex_createcellarray(3), FALSE);
-  c2_hoistedGlobal = *c2_A;
+  c2_hoistedGlobal = *c2_dA;
   c2_u = c2_hoistedGlobal;
   c2_b_y = NULL;
   sf_mex_assign(&c2_b_y, sf_mex_create("y", &c2_u, 0, 0U, 0U, 0U, 0), FALSE);
   sf_mex_setcell(c2_y, 0, c2_b_y);
-  c2_b_hoistedGlobal = *c2_B;
+  c2_b_hoistedGlobal = *c2_dB;
   c2_b_u = c2_b_hoistedGlobal;
   c2_c_y = NULL;
   sf_mex_assign(&c2_c_y, sf_mex_create("y", &c2_b_u, 0, 0U, 0U, 0U, 0), FALSE);
@@ -130,16 +130,16 @@ static void set_sim_state_c2_untitled(SFc2_untitledInstanceStruct *chartInstance
   const mxArray *c2_st)
 {
   const mxArray *c2_u;
-  real_T *c2_A;
-  real_T *c2_B;
-  c2_B = (real_T *)ssGetOutputPortSignal(chartInstance->S, 2);
-  c2_A = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
+  real_T *c2_dA;
+  real_T *c2_dB;
+  c2_dB = (real_T *)ssGetOutputPortSignal(chartInstance->S, 2);
+  c2_dA = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
   chartInstance->c2_doneDoubleBufferReInit = TRUE;
   c2_u = sf_mex_dup(c2_st);
-  *c2_A = c2_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c2_u, 0)),
-    "A");
-  *c2_B = c2_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c2_u, 1)),
-    "B");
+  *c2_dA = c2_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c2_u, 0)),
+    "dA");
+  *c2_dB = c2_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c2_u, 1)),
+    "dB");
   chartInstance->c2_is_active_c2_untitled = c2_d_emlrt_marshallIn(chartInstance,
     sf_mex_dup(sf_mex_getcell(c2_u, 2)), "is_active_c2_untitled");
   sf_mex_destroy(&c2_u);
@@ -154,51 +154,49 @@ static void finalize_c2_untitled(SFc2_untitledInstanceStruct *chartInstance)
 static void sf_c2_untitled(SFc2_untitledInstanceStruct *chartInstance)
 {
   real_T c2_hoistedGlobal;
-  real_T c2_z;
+  real_T c2_dz;
   uint32_T c2_debug_family_var_map[5];
   real_T c2_nargin = 1.0;
   real_T c2_nargout = 2.0;
-  real_T c2_A;
-  real_T c2_B;
+  real_T c2_dA;
+  real_T c2_dB;
   real_T c2_x;
   real_T c2_xk;
   real_T c2_b_x;
   real_T c2_c_x;
   real_T c2_d_x;
   real_T c2_e_x;
-  real_T c2_r;
-  real_T c2_b_A;
-  real_T c2_f_x;
-  real_T c2_g_x;
-  real_T *c2_b_B;
-  real_T *c2_c_A;
-  real_T *c2_b_z;
-  c2_b_B = (real_T *)ssGetOutputPortSignal(chartInstance->S, 2);
-  c2_c_A = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
-  c2_b_z = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
+  real_T c2_b;
+  real_T c2_y;
+  real_T *c2_b_dB;
+  real_T *c2_b_dA;
+  real_T *c2_b_dz;
+  c2_b_dB = (real_T *)ssGetOutputPortSignal(chartInstance->S, 2);
+  c2_b_dA = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
+  c2_b_dz = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 1U, chartInstance->c2_sfEvent);
-  _SFD_DATA_RANGE_CHECK(*c2_b_z, 0U);
-  _SFD_DATA_RANGE_CHECK(*c2_c_A, 1U);
-  _SFD_DATA_RANGE_CHECK(*c2_b_B, 2U);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 0U, chartInstance->c2_sfEvent);
+  _SFD_DATA_RANGE_CHECK(*c2_b_dz, 0U);
+  _SFD_DATA_RANGE_CHECK(*c2_b_dA, 1U);
+  _SFD_DATA_RANGE_CHECK(*c2_b_dB, 2U);
   chartInstance->c2_sfEvent = CALL_EVENT;
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 1U, chartInstance->c2_sfEvent);
-  c2_hoistedGlobal = *c2_b_z;
-  c2_z = c2_hoistedGlobal;
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 0U, chartInstance->c2_sfEvent);
+  c2_hoistedGlobal = *c2_b_dz;
+  c2_dz = c2_hoistedGlobal;
   sf_debug_symbol_scope_push_eml(0U, 5U, 5U, c2_debug_family_names,
     c2_debug_family_var_map);
   sf_debug_symbol_scope_add_eml_importable(&c2_nargin, 0U, c2_sf_marshallOut,
     c2_sf_marshallIn);
   sf_debug_symbol_scope_add_eml_importable(&c2_nargout, 1U, c2_sf_marshallOut,
     c2_sf_marshallIn);
-  sf_debug_symbol_scope_add_eml(&c2_z, 2U, c2_sf_marshallOut);
-  sf_debug_symbol_scope_add_eml_importable(&c2_A, 3U, c2_sf_marshallOut,
+  sf_debug_symbol_scope_add_eml(&c2_dz, 2U, c2_sf_marshallOut);
+  sf_debug_symbol_scope_add_eml_importable(&c2_dA, 3U, c2_sf_marshallOut,
     c2_sf_marshallIn);
-  sf_debug_symbol_scope_add_eml_importable(&c2_B, 4U, c2_sf_marshallOut,
+  sf_debug_symbol_scope_add_eml_importable(&c2_dB, 4U, c2_sf_marshallOut,
     c2_sf_marshallIn);
   CV_EML_FCN(0, 0);
   _SFD_EML_CALL(0U, chartInstance->c2_sfEvent, 2);
-  c2_x = c2_z;
+  c2_x = c2_dz;
   c2_eml_scalar_eg(chartInstance);
   c2_xk = c2_x;
   c2_b_x = c2_xk;
@@ -207,18 +205,16 @@ static void sf_c2_untitled(SFc2_untitledInstanceStruct *chartInstance)
   c2_d_x = c2_c_x / 359.0;
   c2_e_x = c2_d_x;
   c2_e_x = muDoubleScalarFloor(c2_e_x);
-  c2_r = c2_c_x - c2_e_x * 359.0;
-  c2_A = c2_r - 1.0;
+  c2_dB = c2_c_x - c2_e_x * 359.0;
   _SFD_EML_CALL(0U, chartInstance->c2_sfEvent, 3);
-  c2_b_A = (c2_z - c2_A) - 1.0;
-  c2_f_x = c2_b_A;
-  c2_g_x = c2_f_x;
-  c2_B = c2_g_x / 359.0;
+  c2_b = c2_dB;
+  c2_y = 359.0 * c2_b;
+  c2_dA = c2_dz - c2_y;
   _SFD_EML_CALL(0U, chartInstance->c2_sfEvent, -3);
   sf_debug_symbol_scope_pop();
-  *c2_c_A = c2_A;
-  *c2_b_B = c2_B;
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 1U, chartInstance->c2_sfEvent);
+  *c2_b_dA = c2_dA;
+  *c2_b_dB = c2_dB;
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 0U, chartInstance->c2_sfEvent);
   sf_debug_check_for_state_inconsistency(_untitledMachineNumber_,
     chartInstance->chartNumber, chartInstance->instanceNumber);
 }
@@ -248,14 +244,14 @@ static const mxArray *c2_sf_marshallOut(void *chartInstanceVoid, void *c2_inData
 }
 
 static real_T c2_emlrt_marshallIn(SFc2_untitledInstanceStruct *chartInstance,
-  const mxArray *c2_B, const char_T *c2_identifier)
+  const mxArray *c2_dB, const char_T *c2_identifier)
 {
   real_T c2_y;
   emlrtMsgIdentifier c2_thisId;
   c2_thisId.fIdentifier = c2_identifier;
   c2_thisId.fParent = NULL;
-  c2_y = c2_b_emlrt_marshallIn(chartInstance, sf_mex_dup(c2_B), &c2_thisId);
-  sf_mex_destroy(&c2_B);
+  c2_y = c2_b_emlrt_marshallIn(chartInstance, sf_mex_dup(c2_dB), &c2_thisId);
+  sf_mex_destroy(&c2_dB);
   return c2_y;
 }
 
@@ -273,18 +269,18 @@ static real_T c2_b_emlrt_marshallIn(SFc2_untitledInstanceStruct *chartInstance,
 static void c2_sf_marshallIn(void *chartInstanceVoid, const mxArray
   *c2_mxArrayInData, const char_T *c2_varName, void *c2_outData)
 {
-  const mxArray *c2_B;
+  const mxArray *c2_dB;
   const char_T *c2_identifier;
   emlrtMsgIdentifier c2_thisId;
   real_T c2_y;
   SFc2_untitledInstanceStruct *chartInstance;
   chartInstance = (SFc2_untitledInstanceStruct *)chartInstanceVoid;
-  c2_B = sf_mex_dup(c2_mxArrayInData);
+  c2_dB = sf_mex_dup(c2_mxArrayInData);
   c2_identifier = c2_varName;
   c2_thisId.fIdentifier = c2_identifier;
   c2_thisId.fParent = NULL;
-  c2_y = c2_b_emlrt_marshallIn(chartInstance, sf_mex_dup(c2_B), &c2_thisId);
-  sf_mex_destroy(&c2_B);
+  c2_y = c2_b_emlrt_marshallIn(chartInstance, sf_mex_dup(c2_dB), &c2_thisId);
+  sf_mex_destroy(&c2_dB);
   *(real_T *)c2_outData = c2_y;
   sf_mex_destroy(&c2_mxArrayInData);
 }
@@ -292,15 +288,15 @@ static void c2_sf_marshallIn(void *chartInstanceVoid, const mxArray
 const mxArray *sf_c2_untitled_get_eml_resolved_functions_info(void)
 {
   const mxArray *c2_nameCaptureInfo;
-  c2_ResolvedFunctionInfo c2_info[16];
+  c2_ResolvedFunctionInfo c2_info[14];
   const mxArray *c2_m0 = NULL;
   int32_T c2_i0;
   c2_ResolvedFunctionInfo *c2_r0;
   c2_nameCaptureInfo = NULL;
   c2_nameCaptureInfo = NULL;
   c2_info_helper(c2_info);
-  sf_mex_assign(&c2_m0, sf_mex_createstruct("nameCaptureInfo", 1, 16), FALSE);
-  for (c2_i0 = 0; c2_i0 < 16; c2_i0++) {
+  sf_mex_assign(&c2_m0, sf_mex_createstruct("nameCaptureInfo", 1, 14), FALSE);
+  for (c2_i0 = 0; c2_i0 < 14; c2_i0++) {
     c2_r0 = &c2_info[c2_i0];
     sf_mex_addfield(c2_m0, sf_mex_create("nameCaptureInfo", c2_r0->context, 15,
       0U, 0U, 0U, 2, 1, strlen(c2_r0->context)), "context", "nameCaptureInfo",
@@ -328,166 +324,146 @@ const mxArray *sf_c2_untitled_get_eml_resolved_functions_info(void)
   return c2_nameCaptureInfo;
 }
 
-static void c2_info_helper(c2_ResolvedFunctionInfo c2_info[16])
+static void c2_info_helper(c2_ResolvedFunctionInfo c2_info[14])
 {
   c2_info[0].context = "";
   c2_info[0].name = "mod";
   c2_info[0].dominantType = "double";
   c2_info[0].resolved =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/elfun/mod.m";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/elfun/mod.m";
   c2_info[0].fileTimeLo = 1286815144U;
   c2_info[0].fileTimeHi = 0U;
   c2_info[0].mFileTimeLo = 0U;
   c2_info[0].mFileTimeHi = 0U;
   c2_info[1].context =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/elfun/mod.m";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/elfun/mod.m";
   c2_info[1].name = "eml_scalar_eg";
   c2_info[1].dominantType = "double";
   c2_info[1].resolved =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/eml/eml_scalar_eg.m";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/eml/eml_scalar_eg.m";
   c2_info[1].fileTimeLo = 1286815196U;
   c2_info[1].fileTimeHi = 0U;
   c2_info[1].mFileTimeLo = 0U;
   c2_info[1].mFileTimeHi = 0U;
   c2_info[2].context =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/elfun/mod.m";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/elfun/mod.m";
   c2_info[2].name = "eml_scalexp_alloc";
   c2_info[2].dominantType = "double";
   c2_info[2].resolved =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/eml/eml_scalexp_alloc.m";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/eml/eml_scalexp_alloc.m";
   c2_info[2].fileTimeLo = 1286815196U;
   c2_info[2].fileTimeHi = 0U;
   c2_info[2].mFileTimeLo = 0U;
   c2_info[2].mFileTimeHi = 0U;
   c2_info[3].context =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/elfun/mod.m";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/elfun/mod.m";
   c2_info[3].name = "eml_scalar_mod";
   c2_info[3].dominantType = "double";
   c2_info[3].resolved =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/elfun/eml_scalar_mod.m";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/elfun/eml_scalar_mod.m";
   c2_info[3].fileTimeLo = 1307647638U;
   c2_info[3].fileTimeHi = 0U;
   c2_info[3].mFileTimeLo = 0U;
   c2_info[3].mFileTimeHi = 0U;
   c2_info[4].context =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/elfun/eml_scalar_mod.m!local_scalar_mod";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/elfun/eml_scalar_mod.m!local_scalar_mod";
   c2_info[4].name = "eml_scalar_eg";
   c2_info[4].dominantType = "double";
   c2_info[4].resolved =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/eml/eml_scalar_eg.m";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/eml/eml_scalar_eg.m";
   c2_info[4].fileTimeLo = 1286815196U;
   c2_info[4].fileTimeHi = 0U;
   c2_info[4].mFileTimeLo = 0U;
   c2_info[4].mFileTimeHi = 0U;
   c2_info[5].context =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/elfun/eml_scalar_mod.m!local_scalar_mod";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/elfun/eml_scalar_mod.m!local_scalar_mod";
   c2_info[5].name = "eml_scalar_floor";
   c2_info[5].dominantType = "double";
   c2_info[5].resolved =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/elfun/eml_scalar_floor.m";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/elfun/eml_scalar_floor.m";
   c2_info[5].fileTimeLo = 1286815126U;
   c2_info[5].fileTimeHi = 0U;
   c2_info[5].mFileTimeLo = 0U;
   c2_info[5].mFileTimeHi = 0U;
   c2_info[6].context =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/elfun/eml_scalar_mod.m!local_scalar_mod";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/elfun/eml_scalar_mod.m!local_scalar_mod";
   c2_info[6].name = "eml_scalar_round";
   c2_info[6].dominantType = "double";
   c2_info[6].resolved =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/elfun/eml_scalar_round.m";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/elfun/eml_scalar_round.m";
   c2_info[6].fileTimeLo = 1307647638U;
   c2_info[6].fileTimeHi = 0U;
   c2_info[6].mFileTimeLo = 0U;
   c2_info[6].mFileTimeHi = 0U;
   c2_info[7].context =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/elfun/eml_scalar_mod.m!local_scalar_mod";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/elfun/eml_scalar_mod.m!local_scalar_mod";
   c2_info[7].name = "eml_scalar_abs";
   c2_info[7].dominantType = "double";
   c2_info[7].resolved =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/elfun/eml_scalar_abs.m";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/elfun/eml_scalar_abs.m";
   c2_info[7].fileTimeLo = 1286815112U;
   c2_info[7].fileTimeHi = 0U;
   c2_info[7].mFileTimeLo = 0U;
   c2_info[7].mFileTimeHi = 0U;
   c2_info[8].context =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/elfun/eml_scalar_mod.m!local_scalar_mod";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/elfun/eml_scalar_mod.m!local_scalar_mod";
   c2_info[8].name = "eps";
   c2_info[8].dominantType = "char";
   c2_info[8].resolved =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/elmat/eps.m";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/elmat/eps.m";
   c2_info[8].fileTimeLo = 1307647640U;
   c2_info[8].fileTimeHi = 0U;
   c2_info[8].mFileTimeLo = 0U;
   c2_info[8].mFileTimeHi = 0U;
   c2_info[9].context =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/elmat/eps.m";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/elmat/eps.m";
   c2_info[9].name = "eml_is_float_class";
   c2_info[9].dominantType = "char";
   c2_info[9].resolved =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/eml/eml_is_float_class.m";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/eml/eml_is_float_class.m";
   c2_info[9].fileTimeLo = 1286815182U;
   c2_info[9].fileTimeHi = 0U;
   c2_info[9].mFileTimeLo = 0U;
   c2_info[9].mFileTimeHi = 0U;
   c2_info[10].context =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/elmat/eps.m";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/elmat/eps.m";
   c2_info[10].name = "eml_eps";
   c2_info[10].dominantType = "char";
   c2_info[10].resolved =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/eml/eml_eps.m";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/eml/eml_eps.m";
   c2_info[10].fileTimeLo = 1307647640U;
   c2_info[10].fileTimeHi = 0U;
   c2_info[10].mFileTimeLo = 0U;
   c2_info[10].mFileTimeHi = 0U;
   c2_info[11].context =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/eml/eml_eps.m";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/eml/eml_eps.m";
   c2_info[11].name = "eml_float_model";
   c2_info[11].dominantType = "char";
   c2_info[11].resolved =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/eml/eml_float_model.m";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/eml/eml_float_model.m";
   c2_info[11].fileTimeLo = 1307647642U;
   c2_info[11].fileTimeHi = 0U;
   c2_info[11].mFileTimeLo = 0U;
   c2_info[11].mFileTimeHi = 0U;
   c2_info[12].context =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/elfun/eml_scalar_mod.m!local_scalar_mod";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/elfun/eml_scalar_mod.m!local_scalar_mod";
   c2_info[12].name = "mtimes";
   c2_info[12].dominantType = "double";
   c2_info[12].resolved =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/ops/mtimes.m";
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/ops/mtimes.m";
   c2_info[12].fileTimeLo = 1289516092U;
   c2_info[12].fileTimeHi = 0U;
   c2_info[12].mFileTimeLo = 0U;
   c2_info[12].mFileTimeHi = 0U;
   c2_info[13].context = "";
-  c2_info[13].name = "mrdivide";
+  c2_info[13].name = "mtimes";
   c2_info[13].dominantType = "double";
   c2_info[13].resolved =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/ops/mrdivide.p";
-  c2_info[13].fileTimeLo = 1325120538U;
+    "[ILXE]D:/kpi/II/soft/MatLabR2012b/toolbox/eml/lib/matlab/ops/mtimes.m";
+  c2_info[13].fileTimeLo = 1289516092U;
   c2_info[13].fileTimeHi = 0U;
-  c2_info[13].mFileTimeLo = 1319726366U;
+  c2_info[13].mFileTimeLo = 0U;
   c2_info[13].mFileTimeHi = 0U;
-  c2_info[14].context =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/ops/mrdivide.p";
-  c2_info[14].name = "rdivide";
-  c2_info[14].dominantType = "double";
-  c2_info[14].resolved =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/ops/rdivide.m";
-  c2_info[14].fileTimeLo = 1286815244U;
-  c2_info[14].fileTimeHi = 0U;
-  c2_info[14].mFileTimeLo = 0U;
-  c2_info[14].mFileTimeHi = 0U;
-  c2_info[15].context =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/ops/rdivide.m";
-  c2_info[15].name = "eml_div";
-  c2_info[15].dominantType = "double";
-  c2_info[15].resolved =
-    "[ILXE]D:/kpi/II/soft/MatLab2012b/bin/toolbox/eml/lib/matlab/eml/eml_div.m";
-  c2_info[15].fileTimeLo = 1313344210U;
-  c2_info[15].fileTimeHi = 0U;
-  c2_info[15].mFileTimeLo = 0U;
-  c2_info[15].mFileTimeHi = 0U;
 }
 
 static void c2_eml_scalar_eg(SFc2_untitledInstanceStruct *chartInstance)
@@ -572,10 +548,10 @@ static void init_dsm_address_info(SFc2_untitledInstanceStruct *chartInstance)
 /* SFunction Glue Code */
 void sf_c2_untitled_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(281413192U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2975321551U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2193716497U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(827553045U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(729178752U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1800609880U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1748975927U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1215311324U);
 }
 
 mxArray *sf_c2_untitled_get_autoinheritance_info(void)
@@ -587,7 +563,7 @@ mxArray *sf_c2_untitled_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("wXO2cjdvKvupq5jqjUI2LH");
+    mxArray *mxChecksum = mxCreateString("AtxtgDihj8hS7j1y0OtwyE");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -680,7 +656,7 @@ static const mxArray *sf_get_sim_state_info_c2_untitled(void)
 
   mxArray *mxInfo = mxCreateStructMatrix(1, 1, 2, infoFields);
   const char *infoEncStr[] = {
-    "100 S1x3'type','srcId','name','auxInfo'{{M[1],M[5],T\"A\",},{M[1],M[6],T\"B\",},{M[8],M[0],T\"is_active_c2_untitled\",}}"
+    "100 S1x3'type','srcId','name','auxInfo'{{M[1],M[5],T\"dA\",},{M[1],M[6],T\"dB\",},{M[8],M[0],T\"is_active_c2_untitled\",}}"
   };
 
   mxArray *mxVarInfo = sf_mex_decode_encoded_mx_struct_array(infoEncStr, 3, 10);
@@ -727,9 +703,9 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
             0,
             0,
             0);
-          _SFD_SET_DATA_PROPS(0,1,1,0,"z");
-          _SFD_SET_DATA_PROPS(1,2,0,1,"A");
-          _SFD_SET_DATA_PROPS(2,2,0,1,"B");
+          _SFD_SET_DATA_PROPS(0,1,1,0,"dz");
+          _SFD_SET_DATA_PROPS(1,2,0,1,"dA");
+          _SFD_SET_DATA_PROPS(2,2,0,1,"dB");
           _SFD_STATE_INFO(0,0,2);
           _SFD_CH_SUBSTATE_COUNT(0);
           _SFD_CH_SUBSTATE_DECOMP(0);
@@ -745,7 +721,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
         /* Initialization of MATLAB Function Model Coverage */
         _SFD_CV_INIT_EML(0,1,1,0,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,56);
+        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,58);
         _SFD_TRANS_COV_WTS(0,0,0,1,0);
         if (chartAlreadyPresent==0) {
           _SFD_TRANS_COV_MAPS(0,
@@ -763,15 +739,15 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           (MexFcnForType)c2_sf_marshallOut,(MexInFcnForType)c2_sf_marshallIn);
 
         {
-          real_T *c2_z;
-          real_T *c2_A;
-          real_T *c2_B;
-          c2_B = (real_T *)ssGetOutputPortSignal(chartInstance->S, 2);
-          c2_A = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
-          c2_z = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
-          _SFD_SET_DATA_VALUE_PTR(0U, c2_z);
-          _SFD_SET_DATA_VALUE_PTR(1U, c2_A);
-          _SFD_SET_DATA_VALUE_PTR(2U, c2_B);
+          real_T *c2_dz;
+          real_T *c2_dA;
+          real_T *c2_dB;
+          c2_dB = (real_T *)ssGetOutputPortSignal(chartInstance->S, 2);
+          c2_dA = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
+          c2_dz = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
+          _SFD_SET_DATA_VALUE_PTR(0U, c2_dz);
+          _SFD_SET_DATA_VALUE_PTR(1U, c2_dA);
+          _SFD_SET_DATA_VALUE_PTR(2U, c2_dB);
         }
       }
     } else {
@@ -783,7 +759,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization()
 {
-  return "4bBD3BS8mKvwMCIobTsRPC";
+  return "mwCRuPOFTqdrOB6UZ9BFTG";
 }
 
 static void sf_opaque_initialize_c2_untitled(void *chartInstanceVar)
@@ -935,10 +911,10 @@ static void mdlSetWorkWidths_c2_untitled(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(961716956U));
-  ssSetChecksum1(S,(2675925646U));
-  ssSetChecksum2(S,(195243930U));
-  ssSetChecksum3(S,(1036987881U));
+  ssSetChecksum0(S,(1998533495U));
+  ssSetChecksum1(S,(503965805U));
+  ssSetChecksum2(S,(4231352431U));
+  ssSetChecksum3(S,(1518653575U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
 }

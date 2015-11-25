@@ -1,0 +1,36 @@
+CC     = "D:\kpi\II\soft\MatLabR2012b\sys\lcc\bin\lcc.exe"
+LD     = "D:\kpi\II\soft\MatLabR2012b\sys\lcc\bin\lcclnk.exe"
+LIBCMD = "D:\kpi\II\soft\MatLabR2012b\sys\lcc\bin\lcclib.exe"
+CFLAGS = -c -Zp8 -DMATLAB_MEX_FILE -noregistrylookup
+LDFLAGS = -s -dll -L"D:\kpi\II\soft\MatLabR2012b\sys\lcc\lib"
+LIBFLAGS = 
+
+OBJECTS = \
+	"untitled_sfun.obj"\
+	"untitled_sfun_registry.obj"\
+	"c2_untitled.obj"\
+	"lccstub.obj"\
+	"D:\kpi\II\soft\MatLabR2012b\sys\lcc\mex\lccdef.def"\
+	"D:\kpi\II\soft\MatLabR2012b\stateflow\c\debugger\lib\win32\sfc_debuglcc.lib"\
+	"D:\kpi\II\soft\MatLabR2012b\stateflow\c\mex\lib\win32\sfc_mexlcc.lib"\
+	"D:\kpi\II\soft\MatLabR2012b\extern\lib\win32\lcc\libmex.lib"\
+	"D:\kpi\II\soft\MatLabR2012b\extern\lib\win32\lcc\libmx.lib"\
+	"D:\kpi\II\soft\MatLabR2012b\extern\lib\win32\lcc\libfixedpoint.lib"\
+	"D:\kpi\II\soft\MatLabR2012b\extern\lib\win32\lcc\libut.lib"\
+	"D:\kpi\II\soft\MatLabR2012b\extern\lib\win32\lcc\libmwmathutil.lib"\
+	"D:\kpi\II\soft\MatLabR2012b\extern\lib\win32\lcc\libemlrt.lib"\
+	"D:\kpi\II\soft\MatLabR2012b\extern\lib\win32\lcc\libmwblascompat32.lib"\
+
+INCLUDE_PATH= -I"D:\kpi\II\soft\MatLabR2012b\sys\lcc\include"  -I"D:\kpi\II\soft\MatLabR2012b\extern\include"  -I"D:\kpi\II\soft\MatLabR2012b\simulink\include"  -I"D:\kpi\II\soft\MatLabR2012b\stateflow\c\mex\include"  -I"D:\kpi\II\soft\MatLabR2012b\stateflow\c\debugger\include" 
+ 
+
+untitled_sfun.mexw32 : $(MAKEFILE) $(OBJECTS)
+	$(LD) $(LDFLAGS) -o untitled_sfun.mexw32 @untitled_sfun.lmko
+untitled_sfun.obj :	"untitled_sfun.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "untitled_sfun.c"
+untitled_sfun_registry.obj :	"untitled_sfun_registry.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "untitled_sfun_registry.c"
+c2_untitled.obj :	"c2_untitled.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c2_untitled.c"
+lccstub.obj :	"D:\kpi\II\soft\MatLabR2012b\sys\lcc\mex\lccstub.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "D:\kpi\II\soft\MatLabR2012b\sys\lcc\mex\lccstub.c"

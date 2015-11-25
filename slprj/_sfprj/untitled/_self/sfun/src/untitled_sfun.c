@@ -1,7 +1,6 @@
 /* Include files */
 
 #include "untitled_sfun.h"
-#include "c1_untitled.h"
 #include "c2_untitled.h"
 
 /* Type Definitions */
@@ -29,11 +28,6 @@ void untitled_terminator(void)
 unsigned int sf_untitled_method_dispatcher(SimStruct *simstructPtr, unsigned int
   chartFileNumber, const char* specsCksum, int_T method, void *data)
 {
-  if (chartFileNumber==1) {
-    c1_untitled_method_dispatcher(simstructPtr, method, data);
-    return 1;
-  }
-
   if (chartFileNumber==2) {
     c2_untitled_method_dispatcher(simstructPtr, method, data);
     return 1;
@@ -72,21 +66,14 @@ unsigned int sf_untitled_process_check_sum_call( int nlhs, mxArray * plhs[], int
       ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(0U);
       ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(0U);
     } else if (!strcmp(commandName,"makefile")) {
-      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2168764111U);
-      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1470891106U);
-      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(195478141U);
-      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(3427690558U);
+      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(410944239U);
+      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3807353797U);
+      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3009429501U);
+      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2359204226U);
     } else if (nrhs==3 && !strcmp(commandName,"chart")) {
       unsigned int chartFileNumber;
       chartFileNumber = (unsigned int)mxGetScalar(prhs[2]);
       switch (chartFileNumber) {
-       case 1:
-        {
-          extern void sf_c1_untitled_get_check_sum(mxArray *plhs[]);
-          sf_c1_untitled_get_check_sum(plhs);
-          break;
-        }
-
        case 2:
         {
           extern void sf_c2_untitled_get_check_sum(mxArray *plhs[]);
@@ -109,10 +96,10 @@ unsigned int sf_untitled_process_check_sum_call( int nlhs, mxArray * plhs[], int
       return 0;
     }
   } else {
-    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1635557437U);
-    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2751216242U);
-    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3478735717U);
-    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(393150688U);
+    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3863958553U);
+    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1672260654U);
+    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(974309422U);
+    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(737824896U);
   }
 
   return 1;
@@ -148,21 +135,9 @@ unsigned int sf_untitled_autoinheritance_info( int nlhs, mxArray * plhs[], int
     unsigned int chartFileNumber;
     chartFileNumber = (unsigned int)mxGetScalar(prhs[1]);
     switch (chartFileNumber) {
-     case 1:
-      {
-        if (strcmp(aiChksum, "XJZ747OHXnnMQDV5n7iBiB") == 0) {
-          extern mxArray *sf_c1_untitled_get_autoinheritance_info(void);
-          plhs[0] = sf_c1_untitled_get_autoinheritance_info();
-          break;
-        }
-
-        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
-        break;
-      }
-
      case 2:
       {
-        if (strcmp(aiChksum, "wXO2cjdvKvupq5jqjUI2LH") == 0) {
+        if (strcmp(aiChksum, "AtxtgDihj8hS7j1y0OtwyE") == 0) {
           extern mxArray *sf_c2_untitled_get_autoinheritance_info(void);
           plhs[0] = sf_c2_untitled_get_autoinheritance_info();
           break;
@@ -207,17 +182,6 @@ unsigned int sf_untitled_get_eml_resolved_functions_info( int nlhs, mxArray *
     unsigned int chartFileNumber;
     chartFileNumber = (unsigned int)mxGetScalar(prhs[1]);
     switch (chartFileNumber) {
-     case 1:
-      {
-        extern const mxArray *sf_c1_untitled_get_eml_resolved_functions_info
-          (void);
-        mxArray *persistentMxArray = (mxArray *)
-          sf_c1_untitled_get_eml_resolved_functions_info();
-        plhs[0] = mxDuplicateArray(persistentMxArray);
-        mxDestroyArray(persistentMxArray);
-        break;
-      }
-
      case 2:
       {
         extern const mxArray *sf_c2_untitled_get_eml_resolved_functions_info
@@ -246,7 +210,7 @@ unsigned int sf_untitled_get_eml_resolved_functions_info( int nlhs, mxArray *
 
 void untitled_debug_initialize(void)
 {
-  _untitledMachineNumber_ = sf_debug_initialize_machine("untitled","sfun",0,2,0,
+  _untitledMachineNumber_ = sf_debug_initialize_machine("untitled","sfun",0,1,0,
     0,0);
   sf_debug_set_machine_event_thresholds(_untitledMachineNumber_,0,0);
   sf_debug_set_machine_data_thresholds(_untitledMachineNumber_,0);

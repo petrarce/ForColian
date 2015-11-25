@@ -42,8 +42,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "Ivan"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Nov 25 11:49:19 2015"
-  RTWModifiedTimeStamp	  370352864
+  LastModifiedDate	  "Wed Nov 25 11:35:32 2015"
+  RTWModifiedTimeStamp	  370352058
   ModelVersionFormat	  "1.%<AutoIncrement:5>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
@@ -82,6 +82,7 @@ Model {
     $ObjectID		    2
     $ClassName		    "Simulink.SimulationData.ModelLoggingInfo"
     model_		    "untitled"
+    signals_		    []
     overrideMode_	    [0.0]
     Array {
       Type		      "Cell"
@@ -932,7 +933,7 @@ Model {
   }
   System {
     Name		    "untitled"
-    Location		    [2, 82, 1006, 547]
+    Location		    [485, 98, 1105, 570]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -946,7 +947,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "148"
+    SIDHighWatermark	    "145"
     Block {
       BlockType		      Constant
       Name		      "A"
@@ -1167,8 +1168,8 @@ Model {
       ClassName		      "Ground"
       CoordPosition	      "[0 0 0]"
       CoordPositionUnits      "m"
-      StateVectorMgrId	      "0"
-      MachineId		      "[1 0]"
+      StateVectorMgrId	      "-1"
+      MachineId		      "[0 0]"
       ShowEnvPort	      on
     }
     Block {
@@ -1458,12 +1459,12 @@ Model {
 	Block {
 	  BlockType		  Scope
 	  Name			  "Scope"
-	  SID			  "146"
+	  SID			  "144"
 	  Ports			  [1]
-	  Position		  [825, 134, 855, 166]
+	  Position		  [375, 219, 405, 251]
 	  ZOrder		  -3
 	  Floating		  off
-	  Location		  [555, 420, 879, 659]
+	  Location		  [704, 593, 1028, 832]
 	  Open			  off
 	  NumInputPorts		  "1"
 	  List {
@@ -1484,70 +1485,6 @@ Model {
 	  YMin			  "-7500"
 	  YMax			  "15000"
 	  SaveName		  "ScopeData1"
-	  DataFormat		  "StructureWithTime"
-	  SampleTime		  "0"
-	}
-	Block {
-	  BlockType		  Scope
-	  Name			  "Scope1"
-	  SID			  "147"
-	  Ports			  [1]
-	  Position		  [825, 204, 855, 236]
-	  ZOrder		  -3
-	  Floating		  off
-	  Location		  [695, 355, 1019, 594]
-	  Open			  off
-	  NumInputPorts		  "1"
-	  List {
-	    ListType		    AxesTitles
-	    axes1		    "%<SignalLabel>"
-	  }
-	  List {
-	    ListType		    ScopeGraphics
-	    FigureColor		    "[0.5 0.5 0.5]"
-	    AxesColor		    "[0 0 0]"
-	    AxesTickColor	    "[1 1 1]"
-	    LineColors		    "[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
-	    LineStyles		    "-|-|-|-|-|-"
-	    LineWidths		    "[0.5 0.5 0.5 0.5 0.5 0.5]"
-	    MarkerStyles	    "none|none|none|none|none|none"
-	  }
-	  ShowLegends		  off
-	  YMin			  "-7500"
-	  YMax			  "15000"
-	  SaveName		  "ScopeData2"
-	  DataFormat		  "StructureWithTime"
-	  SampleTime		  "0"
-	}
-	Block {
-	  BlockType		  Scope
-	  Name			  "Scope2"
-	  SID			  "148"
-	  Ports			  [1]
-	  Position		  [550, 259, 580, 291]
-	  ZOrder		  -3
-	  Floating		  off
-	  Location		  [695, 355, 1019, 594]
-	  Open			  off
-	  NumInputPorts		  "1"
-	  List {
-	    ListType		    AxesTitles
-	    axes1		    "%<SignalLabel>"
-	  }
-	  List {
-	    ListType		    ScopeGraphics
-	    FigureColor		    "[0.5 0.5 0.5]"
-	    AxesColor		    "[0 0 0]"
-	    AxesTickColor	    "[1 1 1]"
-	    LineColors		    "[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
-	    LineStyles		    "-|-|-|-|-|-"
-	    LineWidths		    "[0.5 0.5 0.5 0.5 0.5 0.5]"
-	    MarkerStyles	    "none|none|none|none|none|none"
-	  }
-	  ShowLegends		  off
-	  YMin			  "70000"
-	  YMax			  "102500"
-	  SaveName		  "ScopeData3"
 	  DataFormat		  "StructureWithTime"
 	  SampleTime		  "0"
 	}
@@ -1698,8 +1635,8 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem1"
-	    Location		    [296, 99, 916, 588]
-	    Open		    off
+	    Location		    [650, 82, 1270, 571]
+	    Open		    on
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -1788,8 +1725,8 @@ Model {
 	      MaskHideContents	      off
 	      System {
 		Name			"W(t)"
-		Location		[359, 102, 979, 591]
-		Open			off
+		Location		[650, 82, 1270, 571]
+		Open			on
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
 		ScreenColor		"white"
@@ -2144,7 +2081,7 @@ Model {
 	  System {
 	    Name		    "Subsystem3"
 	    Location		    [10, 82, 630, 571]
-	    Open		    off
+	    Open		    on
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -2478,30 +2415,14 @@ Model {
 	Line {
 	  SrcBlock		  "Rounding\nFunction4"
 	  SrcPort		  1
-	  Points		  [15, 0]
-	  Branch {
-	    DstBlock		    "Joint Actuator1"
-	    DstPort		    1
-	  }
-	  Branch {
-	    Points		    [0, -85]
-	    DstBlock		    "Scope1"
-	    DstPort		    1
-	  }
+	  DstBlock		  "Joint Actuator1"
+	  DstPort		  1
 	}
 	Line {
 	  SrcBlock		  "Rounding\nFunction5"
 	  SrcPort		  1
-	  Points		  [10, 0]
-	  Branch {
-	    DstBlock		    "Joint Actuator"
-	    DstPort		    1
-	  }
-	  Branch {
-	    Points		    [0, 75]
-	    DstBlock		    "Scope"
-	    DstPort		    1
-	  }
+	  DstBlock		  "Joint Actuator"
+	  DstPort		  1
 	}
 	Line {
 	  SrcBlock		  "Subsystem3"
@@ -2520,16 +2441,8 @@ Model {
 	Line {
 	  SrcBlock		  "Subsystem1"
 	  SrcPort		  1
-	  Points		  [35, 0]
-	  Branch {
-	    DstBlock		    "Subsystem3"
-	    DstPort		    1
-	  }
-	  Branch {
-	    Points		    [0, 135]
-	    DstBlock		    "Scope2"
-	    DstPort		    1
-	  }
+	  DstBlock		  "Subsystem3"
+	  DstPort		  1
 	}
       }
     }
