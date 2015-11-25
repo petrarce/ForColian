@@ -8,7 +8,6 @@ LIBFLAGS =
 OBJECTS = \
 	"untitled_sfun.obj"\
 	"untitled_sfun_registry.obj"\
-	"c1_untitled.obj"\
 	"c2_untitled.obj"\
 	"c3_untitled.obj"\
 	"c4_untitled.obj"\
@@ -33,8 +32,6 @@ untitled_sfun.obj :	"untitled_sfun.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "untitled_sfun.c"
 untitled_sfun_registry.obj :	"untitled_sfun_registry.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "untitled_sfun_registry.c"
-c1_untitled.obj :	"c1_untitled.c"
-	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c1_untitled.c"
 c2_untitled.obj :	"c2_untitled.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c2_untitled.c"
 c3_untitled.obj :	"c3_untitled.c"
