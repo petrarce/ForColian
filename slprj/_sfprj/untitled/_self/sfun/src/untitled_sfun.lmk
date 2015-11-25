@@ -8,7 +8,10 @@ LIBFLAGS =
 OBJECTS = \
 	"untitled_sfun.obj"\
 	"untitled_sfun_registry.obj"\
+	"c1_untitled.obj"\
 	"c2_untitled.obj"\
+	"c3_untitled.obj"\
+	"c4_untitled.obj"\
 	"lccstub.obj"\
 	"D:\kpi\II\soft\MatLabR2012b\sys\lcc\mex\lccdef.def"\
 	"D:\kpi\II\soft\MatLabR2012b\stateflow\c\debugger\lib\win32\sfc_debuglcc.lib"\
@@ -30,7 +33,13 @@ untitled_sfun.obj :	"untitled_sfun.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "untitled_sfun.c"
 untitled_sfun_registry.obj :	"untitled_sfun_registry.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "untitled_sfun_registry.c"
+c1_untitled.obj :	"c1_untitled.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c1_untitled.c"
 c2_untitled.obj :	"c2_untitled.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c2_untitled.c"
+c3_untitled.obj :	"c3_untitled.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c3_untitled.c"
+c4_untitled.obj :	"c4_untitled.c"
+	$(CC) $(CFLAGS) $(INCLUDE_PATH) "c4_untitled.c"
 lccstub.obj :	"D:\kpi\II\soft\MatLabR2012b\sys\lcc\mex\lccstub.c"
 	$(CC) $(CFLAGS) $(INCLUDE_PATH) "D:\kpi\II\soft\MatLabR2012b\sys\lcc\mex\lccstub.c"
