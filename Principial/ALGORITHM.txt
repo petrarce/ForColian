@@ -11,18 +11,18 @@ Registers:
 -INT	-Integrall part of PID
 -Diff	-differential part of PID
 -Pr	-proportional part of PID
--Res	-Result, which gives PID
+-RESULT	-Result, which gives PID
 Algorithm:
-1.	set 	dt,Pgiv,Ki,Kpr,Kd
+1.	set 	dt,Pgiv,Ki,Kpr,Kd (if start recuest kame GoTo 2)
 2.	Reset all registers (exsept dt,Pgiv,Ki,Kpr,Kd)
 3.	Get 	Pkurr
-4.	Find 	EPSkur 	(Pgiv-Pkurr)
+4.	Find 	EPSkur 	(EPSkur =Pgiv-Pkurr)
 5.	Find 	Sum 	(Sum=Sum+EPSkur)
 6.	Find 	INT 	(INT=Sum*dt)
 7.	Find 	INT 	(INT=INT*KI)
-8.	Find 	Diff	(INT=EPSkur-EPSold)
+8.	Find 	Diff	(Diff=EPSkur-EPSold)
 9.a	Find 	Diff	(Diff=Diff*Kd)
 9.b	Set	EPSold=EPSkurr
-10.	Find	Pr	(Pr=EPnew*Kpr)
-11.	Find	Res	(Res=Int+diff)
-12	Find 	Res	(Res=Res+Pr) GoTo 3
+10.	Find	Pr	(Pr=EPSkur*Kpr)
+11.	Find	RESULT	(RESULT	=Int+diff)
+12	Find 	RESULT	(RESULT	=RESULT+Pr) (if no stop request kame GoTo 3 else go to 1)
